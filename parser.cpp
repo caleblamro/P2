@@ -19,6 +19,7 @@ Token Parser::expect(TokenType t) {
 }
 
 CFG Parser::parse_input() {
+    std::cout << "parse_input" << std::endl;
     std::vector<std::pair<Token, std::vector<Token>>> rules;
     CFG parsed_cfg = parse_rule_list(rules);
     parsed_cfg.print();
@@ -32,16 +33,27 @@ CFG Parser::parse_input() {
 }
 
 CFG Parser::parse_rule_list(std::vector<std::pair<Token, std::vector<Token>>>& rules) {
+    std::cout << "parse_rule_list" << std::endl;
     std::pair<Token, std::vector<Token>> rule = parse_rule();
+    std::cout << "Parsed rule: " << std::endl;
+    rule.first.Print();
+    std::cout << " -> ";
+    for(Token t : rule.second) {
+        t.Print();
+        std::cout << " ";
+    }
+    std::cout << std::endl;
     rules.push_back(rule);
     Token t = lexer.peek(1);
     if(t.token_type == TokenType::HASH) {
+        std::cout << "Found hash... RETURNING" << std::endl;
         return CFG(rules);
     }
     parse_rule_list(rules);
 }
 
 std::pair<Token, std::vector<Token>> Parser::parse_rule() {
+    std::cout << "parse_rule" << std::endl;
     Token lhs;
     try{
         lhs = expect(TokenType::ID);
@@ -67,12 +79,14 @@ std::pair<Token, std::vector<Token>> Parser::parse_rule() {
 }
 
 std::vector<Token> Parser::parse_rhs() {
+    std::cout << "parse_rhs" << std::endl;
     std::vector<Token> rhs_list;
     parse_id_list(rhs_list);
     return rhs_list;
 }
 
 void Parser::parse_id_list(std::vector<Token>& rhs_list) {
+    std::cout << "parse_id_list" << std::endl;
     Token t = lexer.peek(1);
     if (t.token_type == TokenType::STAR) {
         return;
@@ -83,6 +97,7 @@ void Parser::parse_id_list(std::vector<Token>& rhs_list) {
 }
 
 Token Parser::parse_id() {
+    std::cout << "parse_id (gettoken)" << std::endl;
     // for now just return the token, we can make sure it is valid later
     return lexer.GetToken();
 }

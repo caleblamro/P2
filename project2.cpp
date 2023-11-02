@@ -69,8 +69,17 @@ int main (int argc, char* argv[])
     LexicalAnalyzer lexer = LexicalAnalyzer();
     Parser p = Parser(lexer);
     CFG c = p.parse_input();
-    std::cout << "Printing CFG" << std::endl;
-    c.print();
+    std::cout << "Successfully built CFG" << std::endl;
+    // c.print();
+    for(auto& rule : c.getRules()) {
+        rule.first.Print();
+        std::cout << " -> ";
+        for(Token t : rule.second) {
+            t.Print();
+            std::cout << " ";
+        }
+        std::cout << std::endl;
+    }
     ReadGrammar();  // Reads the input grammar from standard input
                     // and represent it internally in data structures
                     // ad described in project 2 presentation file

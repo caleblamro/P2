@@ -51,6 +51,7 @@ void Task5()
 int main (int argc, char* argv[])
 {
     int task;
+    std::cout << "HELLO" << std::endl;
 
     if (argc < 2)
     {
@@ -68,7 +69,6 @@ int main (int argc, char* argv[])
     LexicalAnalyzer lexer = LexicalAnalyzer();
     Parser p = Parser(lexer);
     CFG c = p.parse_input();
-    std::cout << "HELLO";
     std::cout << "Printing CFG" << std::endl;
     c.print();
     ReadGrammar();  // Reads the input grammar from standard input
